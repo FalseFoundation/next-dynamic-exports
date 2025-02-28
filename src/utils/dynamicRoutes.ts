@@ -1,1 +1,1 @@
-export const dynamicRoutes: string[] | null = null;
+export const dynamicRoutes: string[] | null = null
