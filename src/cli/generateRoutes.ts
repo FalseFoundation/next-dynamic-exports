@@ -1,7 +1,7 @@
 import { FALLBACK_STRING } from '../utils/constants'
 import { getDynamicRoutes } from '../utils/getDynamicRoutes'
 import fs from 'fs'
-import path from 'path'  // Import the 'path' module for platform-agnostic path handling
+import path from 'path' // Import the 'path' module for platform-agnostic path handling
 
 export const generateRoutes = () => {
 	const routes = getDynamicRoutes()
@@ -26,7 +26,15 @@ exports.dynamicRoutes = void 0;
 exports.dynamicRoutes = ${JSON.stringify(routes, null, 2)};`
 
 	// Use path.join to ensure platform-specific paths
-	const pathToUpdate = path.join(process.cwd(), 'node_modules', '@falsefoundation', 'next-dynamic-exports', 'dist', 'utils', 'dynamicRoutes.js')
+	const pathToUpdate = path.join(
+		process.cwd(),
+		'node_modules',
+		'@falsefoundation',
+		'next-dynamic-exports',
+		'dist',
+		'utils',
+		'dynamicRoutes.js',
+	)
 
 	fs.writeFileSync(pathToUpdate, routesFile)
 }
@@ -42,7 +50,7 @@ const writeServeJson = (routes: string[]) => {
 }
 const routeToRewrite = (route: string) => {
 	// Normalize the path separators for Windows to Unix format
-	const normalizedRoute = route.replace(/\\/g, '/');  // Replace backslashes with forward slashes
+	const normalizedRoute = route.replace(/\\/g, '/') // Replace backslashes with forward slashes
 
 	return {
 		source: normalizedRoute.replace(/\[([^\]]+)\]/g, ':$1'), // change to /user/:id format
@@ -67,7 +75,15 @@ const writeCloudfrontConfig = (routes: string[]) => {
 	const rewrites = routes.map(routeToRewrite)
 
 	const cloudFuncStr = fs.readFileSync(
-		path.join(process.cwd(), 'node_modules', '@falsefoundation', 'next-dynamic-exports', 'dist', 'cli', 'referenceCloudfrontFunc.js'),
+		path.join(
+			process.cwd(),
+			'node_modules',
+			'@falsefoundation',
+			'next-dynamic-exports',
+			'dist',
+			'cli',
+			'referenceCloudfrontFunc.js',
+		),
 		'utf8',
 	)
 	const cloudFunc = cloudFuncStr
