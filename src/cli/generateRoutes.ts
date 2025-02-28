@@ -1,6 +1,7 @@
 import { FALLBACK_STRING } from '../utils/constants'
 import { getDynamicRoutes } from '../utils/getDynamicRoutes'
 import fs from 'fs'
+import path from 'path'  // Import the 'path' module for platform-agnostic path handling
 
 export const generateRoutes = () => {
 	const routes = getDynamicRoutes()
@@ -24,7 +25,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dynamicRoutes = void 0;
 exports.dynamicRoutes = ${JSON.stringify(routes, null, 2)};`
 
-	const pathToUpdate = `${process.cwd()}/node_modules/@falsefoundation/next-dynamic-exports/dist/utils/dynamicRoutes.js`
+	// Use path.join to ensure platform-specific paths
+	const pathToUpdate = path.join(process.cwd(), 'node_modules', '@falsefoundation', 'next-dynamic-exports', 'dist', 'utils', 'dynamicRoutes.js')
 
 	fs.writeFileSync(pathToUpdate, routesFile)
 }
@@ -34,14 +36,17 @@ const writeServeJson = (routes: string[]) => {
 		rewrites: routes.map(routeToRewrite),
 	}
 
-	const pathToUpdate = `${process.cwd()}/serve.json`
+	// Platform-agnostic path joining
+	const pathToUpdate = path.join(process.cwd(), 'serve.json')
 	fs.writeFileSync(pathToUpdate, JSON.stringify(serveJson, null, 2))
 }
-
 const routeToRewrite = (route: string) => {
+	// Normalize the path separators for Windows to Unix format
+	const normalizedRoute = route.replace(/\\/g, '/');  // Replace backslashes with forward slashes
+
 	return {
-		source: route.replace(/\[([^\]]+)\]/g, ':$1'), // change to /user/:id format
-		destination: route.replace(/\[([^\]]+)\]/g, FALLBACK_STRING) + '.html', // change to /user/fallback format
+		source: normalizedRoute.replace(/\[([^\]]+)\]/g, ':$1'), // change to /user/:id format
+		destination: normalizedRoute.replace(/\[([^\]]+)\]/g, FALLBACK_STRING) + '.html', // change to /user/fallback format
 	}
 }
 
@@ -62,14 +67,15 @@ const writeCloudfrontConfig = (routes: string[]) => {
 	const rewrites = routes.map(routeToRewrite)
 
 	const cloudFuncStr = fs.readFileSync(
-		`${process.cwd()}/node_modules/@falsefoundation/next-dynamic-exports/dist/cli/referenceCloudfrontFunc.js`,
+		path.join(process.cwd(), 'node_modules', '@falsefoundation', 'next-dynamic-exports', 'dist', 'cli', 'referenceCloudfrontFunc.js'),
 		'utf8',
 	)
 	const cloudFunc = cloudFuncStr
 		.replace('[]', JSON.stringify(rewrites, null, 4))
 		.replace('"use strict";', '')
 
-	const pathToUpdate = `${process.cwd()}/cloudfrontFunc.js`
+	// Use platform-agnostic path joining for output file
+	const pathToUpdate = path.join(process.cwd(), 'cloudfrontFunc.js')
 
 	fs.writeFileSync(pathToUpdate, cloudFunc)
 }

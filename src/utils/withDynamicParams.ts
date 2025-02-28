@@ -2,7 +2,8 @@ import { FALLBACK_STRING } from './constants'
 
 const cannotDeduceErr = 'Cannot deduce path, please provide a path to withDynamicParams'
 
-const patternToMatch = /app\/(.*?)\.(tsx|js|jsx)/
+// Updated Regex to support Windows and Unix paths
+const patternToMatch = /[\\/]app[\\/](.*?)[.](tsx|js|jsx)/
 
 export const withDynamicParams = (
 	staticParamsFunc?: ParamsFunc,
@@ -21,7 +22,7 @@ export const parsePagePath = (pagePath: string): string => {
 		throw new Error(cannotDeduceErr)
 	}
 
-	return match[0].replace('app', '').replace(/\/\([^)]*\)/g, '')
+	return match[0].replace(/[\\/]app/, '').replace(/\/\([^)]*\)/g, '')
 }
 
 const getPathFromFileName = (): string => {
@@ -50,7 +51,7 @@ const getPathFromErrorStack = (): string => {
 }
 
 export const getFallbackParamsFromPath = (path: string): Record<string, typeof FALLBACK_STRING> => {
-	const pathParts = path.split('/')
+	const pathParts = path.split(/[\\/]/) // Handle both Windows and Unix separators
 
 	const params = pathParts
 		.map((part) => {
