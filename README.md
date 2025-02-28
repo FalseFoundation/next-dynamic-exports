@@ -26,10 +26,10 @@ Starting with support for AWS S3 + Cloudfront, but can presumably add other prov
 ### Installation And CLI
 
 ```bash
-pnpm install next-static-utils
+pnpm install next-dynamic-exports
 ...
 # Generates edge function for re-routing to a fallback page for dynamic params
-pnpm next-static-utils generate [cloudfront|serve]
+pnpm next-dynamic-exports generate [cloudfront|serve]
 ```
 
 ### Usage
@@ -37,7 +37,7 @@ pnpm next-static-utils generate [cloudfront|serve]
 On your dynamic page:
 
 ```javascript
-import { withDynamicParams } from 'next-static-utils';
+import { withDynamicParams } from 'next-dynamic-exports';
 
 // creates fallback parameter page
 export const generateStaticParams = withDynamicParams();

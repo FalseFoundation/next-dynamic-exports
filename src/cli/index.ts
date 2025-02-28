@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { generateRoutes } from './generateRoutes';
 
 const command = process.argv[2];

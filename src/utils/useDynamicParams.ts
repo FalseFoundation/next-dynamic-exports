@@ -11,7 +11,7 @@ export const useDynamicParams = (): Record<string, string> => {
   useEffect(() => {
     if (!dynamicRoutes)
       throw new Error(
-        'No dynamic routes found, you likely need to run next-static-utils generate'
+        'No dynamic routes found, you likely need to run next-dynamic-exports generate'
       );
 
     const nextParams = extractParamsFromPath(pathName, dynamicRoutes) || {};

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const blocklist = ['node_modules', '.git', '.next', '.vercel', 'out'];
+const blocklist = ['node_modules', '.git', '.next', '.vercel', 'out',  'dist', 'android', 'ios'];
 
 export const findFolderPath = (
   directory: string,

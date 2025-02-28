@@ -24,7 +24,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.dynamicRoutes = void 0;
 exports.dynamicRoutes = ${JSON.stringify(routes, null, 2)};`;
 
-  const pathToUpdate = `${process.cwd()}/node_modules/next-static-utils/dist/utils/dynamicRoutes.js`;
+  const pathToUpdate = `${process.cwd()}/node_modules/@falsefoundation/next-dynamic-exports/dist/utils/dynamicRoutes.js`;
 
   fs.writeFileSync(pathToUpdate, routesFile);
 };
@@ -62,7 +62,7 @@ const writeCloudfrontConfig = (routes: string[]) => {
   const rewrites = routes.map(routeToRewrite);
 
   const cloudFuncStr = fs.readFileSync(
-    `${process.cwd()}/node_modules/next-static-utils/dist/cli/referenceCloudfrontFunc.js`,
+    `${process.cwd()}/node_modules/@falsefoundation/next-dynamic-exports/dist/cli/referenceCloudfrontFunc.js`,
     'utf8'
   );
   const cloudFunc = cloudFuncStr
