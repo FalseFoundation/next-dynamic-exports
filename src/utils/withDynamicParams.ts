@@ -11,7 +11,7 @@ export const withDynamicParams = (
 ): ParamsFunc => {
 	const fallbackParams = getFallbackParamsFromPath(path)
 
-	console.log('withDynamicParams', { path, fallbackParams })
+	// console.log('withDynamicParams', { path, fallbackParams })
 
 	return async () => {
 		const staticParamsArr = staticParamsFunc ? await staticParamsFunc() : []
@@ -22,7 +22,7 @@ export const withDynamicParams = (
 export const parsePagePath = (pagePath: string): string => {
 	const match = pagePath.match(patternToMatch)
 
-	console.log('parsePagePath', { pagePath, match })
+	// console.log('parsePagePath', { pagePath, match })
 
 	if (!match || !match[0]) {
 		throw new Error(cannotDeduceErr)
@@ -69,7 +69,7 @@ export const getFallbackParamsFromPath = (path: string): Record<string, typeof F
 		})
 		.filter((part) => !!part)
 
-	console.log('getFallbackParamsFromPath', { path, pathParts, params })
+	// console.log('getFallbackParamsFromPath', { path, pathParts, params })
 
 	return params.reduce(
 		(acc, param) => {
