@@ -1,6 +1,6 @@
 {
 	"name": "@falsefoundation/next-dynamic-exports",
-	"version": "0.1.5",
+	"version": "0.1.7",
 	"description": "Adds dynamic route handling to Next.js static exports.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -9,6 +9,11 @@
 		"format": "prettier --write ./src",
 		"dev": "nodemon --watch src --ext js,json,ts --exec 'tsc'"
 	},
+	"files": [
+		"dist",
+		"README.md",
+		"package.json"
+	],
 	"keywords": [
 		"nextjs",
 		"static",
